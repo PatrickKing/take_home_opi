@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Container from '@mui/material/Container';
 
 import './App.css';
 import Sensors from './Sensors'
@@ -17,26 +18,28 @@ function App () {
       <div className="App">
         <CssBaseline />
 
-        <ButtonGroup variant="contained">
-          <Link to = "/"><Button>Home</Button></Link>
-          <Link to = "/sensors"><Button>Sensors</Button></Link>
-          <Link to = "/readings"><Button>Readings</Button></Link>
-        </ButtonGroup>
+          <Container maxWidth = 'md'>
+          <ButtonGroup variant="contained">
+            <Link to = "/"><Button>Home</Button></Link>
+            <Link to = "/sensors"><Button>Sensors</Button></Link>
+            <Link to = "/readings"><Button>Readings</Button></Link>
+          </ButtonGroup>
 
-        <Switch>
+          <Switch>
 
-          <Route path = "/sensors">
-            <Sensors />
-          </Route>
+            <Route path = "/sensors">
+              <Sensors />
+            </Route>
 
-          <Route path="/readings">
-            <Readings />
-          </Route>
+            <Route path="/readings">
+              <Readings />
+            </Route>
 
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Container>
 
       </div>
     </Router>
