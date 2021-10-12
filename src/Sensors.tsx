@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
 import Moment from 'moment'
 
 import Table from '@mui/material/Table';
@@ -12,16 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { SensorData } from './RemoteDataTypes';
-
-function getSensorData (setSensorData: (data: null | [SensorData]) => void) {
-  Axios.get('sensors.json')
-  .then( response => {
-    setSensorData(response.data);
-  })
-  .catch( error => {
-    console.error("Couldn't get sensor data.")
-  })
-}
+import { requestSensorData } from './Requests'
 
 function tableBody(sensorData: null | [SensorData],) {
 
@@ -55,7 +45,7 @@ function Sensors () {
   const [sensorData, setSensorData] = useState<null | [SensorData]>(null);
 
   useEffect( () => {
-    getSensorData(setSensorData)
+    requestSensorData(setSensorData)
   }, [setSensorData])
 
   return <div>
