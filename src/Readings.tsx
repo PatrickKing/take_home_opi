@@ -6,6 +6,7 @@ import ReadingsChart from './ReadingsChart'
 import { SensorData, ReadingData } from './RemoteDataTypes';
 import { requestSensorData, requestReadingData } from './Requests'
 
+import { SensorMapOfType, DatasetsForSensors, UnitConvertReadings} from './DataFunctions'
 
 function toggleUnit (temperatureUnit: 'C' | 'F', setTemperatureUnit: (type: 'C' | 'F') => void,) {
 
@@ -16,24 +17,6 @@ function toggleUnit (temperatureUnit: 'C' | 'F', setTemperatureUnit: (type: 'C' 
     setTemperatureUnit('C')
   }
 
-}
-
-function convertReadings (readingData: ReadingData[], temperatureUnit: 'C' | 'F') {
-  // TODO: In the real world, we might want to check the unit specified on the sensor here
-  // TODO: we apply this conversion to all the data, including humidity data, before it's passed through. the way the app is structured right now, this is harmless. But we can fix this.
-
-  if (temperatureUnit === 'C') {
-    return readingData
-  }
-  else {
-    return readingData.map( item => {
-      return {
-        time: item.time,
-        sensorId: item.sensorId,
-        value: item.value * 1.8 + 32,
-      }
-    })
-  }
 }
 
 
@@ -60,27 +43,29 @@ function Readings () {
     </div>
   }
 
-  const unitConvertedReadingData = convertReadings(readingData, temperatureUnit)
+  const humiditySensorsMap = SensorMapOfType(sensorData, 'Humidity Sensor')
+  const temperatureSensorsMap = SensorMapOfType(sensorData, 'Temperature Sensor')
+
+  const humidityDatasets = DatasetsForSensors(readingData, humiditySensorsMap)
+  const temperatureDatasets = DatasetsForSensors(readingData, temperatureSensorsMap)
+
+  const unitConvertedTemperatureDatasets = UnitConvertReadings(temperatureDatasets, temperatureUnit)
 
   return <div>
 
     <h2>Temperature Sensor Readings</h2>
     <ReadingsChart 
-      type = { 'Temperature Sensor' }
-      sensorData = { sensorData }
-      readingData = { unitConvertedReadingData }
-      yLabel = { `Temperature ${temperatureUnit}` }
+      readingData = { unitConvertedTemperatureDatasets }
+      yLabel = { `Temperature °${temperatureUnit}` }
     />
 
     <Button onClick = { () => toggleUnit(temperatureUnit, setTemperatureUnit) }>
-      { `Switch to ${temperatureUnit === 'C' ? 'F' : 'C'}` }
+      { `Switch to ${temperatureUnit === 'C' ? '°F' : '°C'}` }
     </Button>
 
     <h2>Humidity Sensor Readings</h2>
     <ReadingsChart 
-      type = { 'Humidity Sensor' }
-      sensorData = { sensorData }
-      readingData = { readingData }
+      readingData = { humidityDatasets }
       yLabel = { 'Humidity (%)' }
     />
   </div>
