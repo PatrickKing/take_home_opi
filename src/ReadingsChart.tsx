@@ -1,5 +1,5 @@
 import React from 'react';
-import { VictoryChart, VictoryLine, VictoryTheme } from 'victory';
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis } from 'victory';
 import Moment from 'moment'
 import Numeral from 'numeral'
 
@@ -61,6 +61,7 @@ type ReadingsChartProps = {
   type: string,
   sensorData: SensorData[],
   readingData: ReadingData[],
+  yLabel: string,
 }
 
 function ReadingsChart (props: ReadingsChartProps) {
@@ -68,10 +69,27 @@ function ReadingsChart (props: ReadingsChartProps) {
   const sensorsMap = sensorMapOfType(props.sensorData, props.type)
   const datasets = datasetsForSensors(props.readingData, sensorsMap)
 
-
   return <VictoryChart theme = { VictoryTheme.material }>
+
+    <VictoryAxis
+      label = "Time"
+      style = { {
+        axisLabel: { padding: 30 },
+        tickLabels: {fontSize: 8, padding: 5}
+      } }
+      tickFormat = { value => {
+        return Moment(value).format('hh:mm:ss')
+      }}
+    />
+    <VictoryAxis dependentAxis
+      label = { props.yLabel }
+      style = { {
+        axisLabel: { padding: 40 }
+      } }
+    />
+
     { Array.from(datasets).map( ([key, dataset]) => {
-        return <VictoryLine data = { processReadingData(dataset) }>
+        return <VictoryLine key = { key } data = { processReadingData(dataset) }>
         </VictoryLine>
       })
     }
