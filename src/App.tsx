@@ -4,8 +4,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
 
-import './App.css';
 import Sensors from './Sensors'
 import Readings from './Readings'
 import Home from './Home'
@@ -13,34 +14,56 @@ import Home from './Home'
 
 
 function App () {
+
+  const theme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#e9c437',
+        light: '#fff76b',
+        dark: '#b39400',
+      },
+      secondary: {
+        main: '#e96a37',
+        light: '#e96a37',
+        dark: '#b13a08',
+      },
+    }
+  });
+
   return (
     <Router>
       <div className="App">
-        <CssBaseline />
+        <ThemeProvider theme = { theme }>
+          <CssBaseline />
 
           <Container maxWidth = 'md'>
-          <ButtonGroup variant="contained">
-            <Link to = "/"><Button>Home</Button></Link>
-            <Link to = "/sensors"><Button>Sensors</Button></Link>
-            <Link to = "/readings"><Button>Readings</Button></Link>
-          </ButtonGroup>
+            <Paper sx = { { p: 2 } } elevation = { 2 }>
 
-          <Switch>
+              <ButtonGroup variant="contained">
+                <Link to = "/"><Button>Home</Button></Link>
+                <Link to = "/sensors"><Button>Sensors</Button></Link>
+                <Link to = "/readings"><Button>Readings</Button></Link>
+              </ButtonGroup>
 
-            <Route path = "/sensors">
-              <Sensors />
-            </Route>
+              <Switch>
+                <Route path = "/sensors">
+                  <Sensors />
+                </Route>
 
-            <Route path="/readings">
-              <Readings />
-            </Route>
+                <Route path="/readings">
+                  <Readings />
+                </Route>
 
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </Container>
+                <Route path="/">
+                  <Home />
+                </Route>
+              </Switch>
 
+            </Paper>
+          </Container>
+
+        </ThemeProvider>
       </div>
     </Router>
   );

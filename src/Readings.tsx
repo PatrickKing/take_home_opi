@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 import ReadingsChart from './ReadingsChart'
 import { SensorData, ReadingData } from './RemoteDataTypes';
@@ -43,6 +44,7 @@ function Readings () {
     </div>
   }
 
+
   const humiditySensorsMap = SensorMapOfType(sensorData, 'Humidity Sensor')
   const temperatureSensorsMap = SensorMapOfType(sensorData, 'Temperature Sensor')
 
@@ -51,19 +53,30 @@ function Readings () {
 
   const unitConvertedTemperatureDatasets = UnitConvertReadings(temperatureDatasets, temperatureUnit)
 
+
   return <div>
 
-    <h2>Temperature Sensor Readings</h2>
-    <ReadingsChart 
-      readingData = { unitConvertedTemperatureDatasets }
-      yLabel = { `Temperature °${temperatureUnit}` }
-    />
+    <Typography variant="h1" component='h1'>
+      Readings
+    </Typography>
+
+    <Typography variant="h2" component='h2'>
+      Temperature Sensor Readings
+    </Typography>
 
     <Button onClick = { () => toggleUnit(temperatureUnit, setTemperatureUnit) }>
       { `Switch to ${temperatureUnit === 'C' ? '°F' : '°C'}` }
     </Button>
 
-    <h2>Humidity Sensor Readings</h2>
+    <ReadingsChart 
+      readingData = { unitConvertedTemperatureDatasets }
+      yLabel = { `Temperature °${temperatureUnit}` }
+    />
+
+    <Typography variant="h2" component='h2'>
+      Humidity Sensor Readings
+    </Typography>
+
     <ReadingsChart 
       readingData = { humidityDatasets }
       yLabel = { 'Humidity (%)' }

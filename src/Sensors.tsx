@@ -9,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 import { SensorData } from './RemoteDataTypes';
 import { requestSensorData } from './Requests'
@@ -49,6 +50,10 @@ function Sensors () {
   }, [setSensorData])
 
   return <div>
+
+    <Typography variant="h1" component='h1'>
+      Sensors
+    </Typography>
 
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }}>

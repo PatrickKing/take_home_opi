@@ -1,6 +1,7 @@
 import Moment from 'moment'
 import { SensorData, ReadingData } from './RemoteDataTypes';
 
+// Each of these is intended to remain a pure function, without side effects
 
 // Create a map of sensor id => sensor, with only sensors of the given type.
 function SensorMapOfType (sensors: SensorData[], sensorType: string) {
@@ -53,7 +54,7 @@ function ReadingDataForGraphing (readingData: ReadingData[]) {
 
 }
 
-
+// If needed, convert a map of temperature readings from C to F
 function UnitConvertReadings (readingData: Map<number, ReadingData[]>, temperatureUnit: 'C' | 'F') {
   // TODO: In the real world, we might want to check that the unit specified on the sensor here is C. Since all of my source data is in degrees C, for the purposes of this exercise I'll assume that this is part of my "API"'s contract.
 

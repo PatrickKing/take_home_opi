@@ -1,9 +1,8 @@
 import React from 'react';
 import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis } from 'victory';
 import Moment from 'moment'
-import Numeral from 'numeral'
 
-import { SensorData, ReadingData } from './RemoteDataTypes';
+import { ReadingData } from './RemoteDataTypes';
 import { ReadingDataForGraphing } from './DataFunctions';
 
 type ReadingsChartProps = {

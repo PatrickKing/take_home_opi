@@ -1,8 +1,14 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
+
 
 function Home () {
 
-  return <div><h1>Home</h1></div>
+  return <div>
+    <Typography variant="h1" component='h1'>
+      Home
+    </Typography>
+  </div>
 
 }
 
