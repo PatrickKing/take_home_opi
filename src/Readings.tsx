@@ -68,8 +68,9 @@ function Readings () {
       { `Switch to ${temperatureUnit === 'C' ? '°F' : '°C'}` }
     </Button>
 
-    <ReadingsChart 
+    <ReadingsChart
       readingData = { unitConvertedTemperatureDatasets }
+      sensorData = { temperatureSensorsMap }
       yLabel = { `Temperature °${temperatureUnit}` }
     />
 
@@ -77,8 +78,9 @@ function Readings () {
       Humidity Sensor Readings
     </Typography>
 
-    <ReadingsChart 
+    <ReadingsChart
       readingData = { humidityDatasets }
+      sensorData = { humiditySensorsMap }
       yLabel = { 'Humidity (%)' }
     />
   </div>
