@@ -1,45 +1,39 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Moment from 'moment'
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { DataGrid, GridValueFormatterParams } from '@mui/x-data-grid';
 
 import { SensorData } from './RemoteDataTypes';
 import { requestSensorData } from './Requests'
 
-function tableBody(sensorData: null | [SensorData],) {
-
-  if (sensorData === null) {
-    return [
-     <TableRow key = 'no-data' >
-        <TableCell component="th" scope="row"> Loading ... </TableCell>
-        <TableCell></TableCell>
-        <TableCell></TableCell>
-        <TableCell></TableCell>
-      </TableRow>
-    ]
-  }
-  else {
-    return sensorData.map( (sensor) => (
-      <TableRow key = { sensor.id } >
-        <TableCell component="th" scope="row">
-          {sensor.name}
-        </TableCell>
-        <TableCell> { sensor.type } </TableCell>
-        <TableCell> { Moment(sensor.createdAt).format('MMM DD, YYYY') } </TableCell>
-        <TableCell> { sensor.units } </TableCell>
-      </TableRow>
-    ))
-  }
-
+function dateFormatter (params: GridValueFormatterParams) {
+  return Moment(params.value as string).format('MMM DD, YYYY')
 }
+
+const sensorColumns = [
+  {
+    field: 'name',
+    headerName: 'Name',
+    width: 150,
+  },
+  {
+    field: 'type',
+    headerName: 'Sensor Type',
+    width: 200,
+  },
+  {
+    field: 'createdAt',
+    headerName: 'Created',
+    width: 150,
+    valueFormatter: dateFormatter
+  },
+  {
+    field: 'units',
+    headerName: 'Unit',
+    width: 150,
+  }
+]
 
 function Sensors () {
 
@@ -49,30 +43,31 @@ function Sensors () {
     requestSensorData(setSensorData)
   }, [setSensorData])
 
+  if (sensorData === null) {
+    return <div>
+      <span>Loading ...</span>
+    </div>
+  }
+
   return <div>
 
-    <Typography variant="h1" component='h1'>
+    <Typography variant = "h1" component = 'h1'>
       Sensors
     </Typography>
 
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell>Unit</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          { tableBody(sensorData) }
-        </TableBody>
-      </Table>
-    </TableContainer>
+
+    <div style = { {height: 400} }>
+      <DataGrid
+        rows = { sensorData }
+        columns = { sensorColumns }
+        pageSize = { 10 }
+      />
+    </div>
+
 
   </div>
 
+    // </Paper>
 }
 
 export default Sensors

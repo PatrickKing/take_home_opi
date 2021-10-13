@@ -11,8 +11,6 @@ import Sensors from './Sensors'
 import Readings from './Readings'
 import Home from './Home'
 
-
-
 function App () {
 
   const theme = createTheme({
@@ -30,6 +28,8 @@ function App () {
       },
     }
   });
+
+
 
   return (
     <Router>
