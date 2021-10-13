@@ -61,7 +61,7 @@ function Readings () {
     </Typography>
 
     <Typography variant="h2" component='h2'>
-      Temperature Sensor Readings
+      Temperature Readings
     </Typography>
 
     <Button onClick = { () => toggleUnit(temperatureUnit, setTemperatureUnit) }>
@@ -71,11 +71,11 @@ function Readings () {
     <ReadingsChart
       readingData = { unitConvertedTemperatureDatasets }
       sensorData = { temperatureSensorsMap }
-      yLabel = { `Temperature °${temperatureUnit}` }
+      yLabel = { `Temperature (°${temperatureUnit})` }
     />
 
     <Typography variant="h2" component='h2'>
-      Humidity Sensor Readings
+      Humidity Readings
     </Typography>
 
     <ReadingsChart

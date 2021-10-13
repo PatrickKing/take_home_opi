@@ -41,9 +41,9 @@ function App () {
             <Paper sx = { { p: 2 } } elevation = { 2 }>
 
               <ButtonGroup variant="contained">
-                <Link to = "/"><Button>Home</Button></Link>
-                <Link to = "/sensors"><Button>Sensors</Button></Link>
-                <Link to = "/readings"><Button>Readings</Button></Link>
+                <Button component = { Link } to = '/'>Home</Button>
+                <Button component = { Link } to = '/sensors'>Sensors</Button>
+                <Button component = { Link } to = '/readings'>Readings</Button>
               </ButtonGroup>
 
               <Switch>

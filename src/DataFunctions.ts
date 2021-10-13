@@ -32,7 +32,7 @@ function DatasetsForSensors (readingData: ReadingData[], sensorsMap: Map<number,
     }
 
     if (!datasets.get(item.sensorId)) {
-      datasets.set(item.sensorId, []) 
+      datasets.set(item.sensorId, [])
     }
 
     (datasets.get(item.sensorId) as ReadingData[]).push(item)
@@ -48,7 +48,7 @@ function ReadingDataForGraphing (readingData: ReadingData[]) {
   return readingData.map ( reading => {
     return {
       x: Moment(reading.time).unix(),
-      y: reading.value//.toFixed(1)
+      y: reading.value
     }
   })
 

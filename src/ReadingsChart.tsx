@@ -1,5 +1,5 @@
 import React from 'react';
-import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis, VictoryLegend } from 'victory';
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis, VictoryLegend, VictoryLabel } from 'victory';
 import Moment from 'moment'
 
 import { ReadingData, SensorData } from './RemoteDataTypes';
@@ -77,10 +77,10 @@ function ReadingsChart (props: ReadingsChartProps) {
       label = 'Time'
       style = { {
         axisLabel: { padding: 30, fill: 'white' },
-        tickLabels: { fontSize: 8, padding: 5, fill: 'white' }
+        tickLabels: { fontSize: 4, padding: 5, fill: 'white' }
       } }
       tickFormat = { value => {
-        return Moment(value).format('hh:mm:ss')
+        return Moment(value).format('MMM DD, hh:mm:ss')
       } }
     />
     <VictoryAxis dependentAxis
@@ -107,8 +107,22 @@ function ReadingsChart (props: ReadingsChartProps) {
         return <VictoryLine
           key = { id }
           data = { ReadingDataForGraphing(dataset) }
-          style = { { data: { stroke: datasetColourAssignments.get(id) } } }
+          style = { {
+            data: {
+              stroke: datasetColourAssignments.get(id)
+            },
+            labels: {
+              fill: 'white',
+              fontSize: 8,
+            }
+          } }
           interpolation = { 'cardinal' }
+          labels = { victoryDataPoint => {
+            return victoryDataPoint.datum.y.toFixed(1)
+          }}
+          labelComponent = {
+            <VictoryLabel renderInPortal dy = { -5 } />
+          }
         />
       })
     }
